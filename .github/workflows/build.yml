@@ -34,7 +34,6 @@ jobs:
       with:
         name: Windows
         path: build/*.zip
-        
   windows-x86:
     name: Windows-x86
     runs-on: windows-2019
@@ -43,7 +42,7 @@ jobs:
     - name: Compile
       run: |
         choco install zip
-        ARCH=x86 make release -j $env:NUMBER_OF_PROCESSORS 
+        make release ARCH=x86 -j $env:NUMBER_OF_PROCESSORS 
       env:
         ARCHIVE: 1
     - uses: actions/upload-artifact@v4
