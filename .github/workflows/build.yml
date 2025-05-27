@@ -49,6 +49,7 @@ jobs:
           install: |
             mingw-w64-i686-gcc
             make
+            zip
       - name: Compile
         shell: msys2 {0}
         run: |
