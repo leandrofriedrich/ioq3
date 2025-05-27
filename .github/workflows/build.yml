@@ -42,7 +42,8 @@ jobs:
     - name: Compile
       run: |
         choco install zip
-        make release ARCH=x86 -j $env:NUMBER_OF_PROCESSORS 
+        pacman -S mingw-w64-i686-gcc
+        make ARCH=x86 WINDRES="windres -F pe-i386" -j $env:NUMBER_OF_PROCESSORS 
       env:
         ARCHIVE: 1
     - uses: actions/upload-artifact@v4
