@@ -34,6 +34,7 @@ jobs:
       with:
         name: Windows
         path: build/*.zip
+        
   windows-x86:
     name: Windows-x86
     runs-on: windows-2019
