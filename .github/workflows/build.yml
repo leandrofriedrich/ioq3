@@ -34,6 +34,21 @@ jobs:
       with:
         name: Windows
         path: build/*.zip
+  windows-x86:
+    name: Windows-x86
+    runs-on: windows-2019
+    steps:
+    - uses: actions/checkout@v4
+    - name: Compile
+      run: |
+        choco install zip
+        ARCH=x86 make release -j $env:NUMBER_OF_PROCESSORS 
+      env:
+        ARCHIVE: 1
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Windows-x86
+        path: build/*.zip
   macos:
     name: macOS
     runs-on: macos-13
