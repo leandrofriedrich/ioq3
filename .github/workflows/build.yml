@@ -40,22 +40,25 @@ jobs:
     name: Windows-x86
     runs-on: windows-2019
     steps:
-    - uses: actions/checkout@v4
-    - name: Install zip
-      run: choco install zip -y
-    - name: Set up MinGW-w64 (x86)
-      uses: egor-tensin/setup-mingw@v2
-      with:
-        platform: x86
-    - name: Compile
-      run: make ARCH=x86 WINDRES="windres -F pe-i386" -j $env:NUMBER_OF_PROCESSORS
-      env:
-        ARCHIVE: 1
-    - uses: actions/upload-artifact@v4
-      with:
-        name: Windows-x86
-        path: build/*.zip
-
+      - uses: actions/checkout@v4
+      - name: Install zip
+        run: choco install zip -y
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW32
+          install: |
+            mingw-w64-i686-gcc
+            make
+      - name: Compile
+        shell: msys2 {0}
+        run: |
+          make ARCH=x86 WINDRES="windres -F pe-i386" -j $(nproc)
+        env:
+          ARCHIVE: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Windows-x86
+          path: build/*.zip
   macos:
     name: macOS
     runs-on: macos-13
